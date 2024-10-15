@@ -17,7 +17,7 @@
 FROM quay.io/suhailtechinfo/suhail-v2
 
 # Clone the repository
-RUN git clone https://github.com/lyfe00011/levanter /home/suhail
+RUN git clone https://github.com/souravkl11/raganork-md /home/suhail
 
 # Change ownership of the directory to the 'node' user
 RUN chown -R node:node /home/suhail
