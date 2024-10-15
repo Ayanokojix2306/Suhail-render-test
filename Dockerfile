@@ -14,7 +14,7 @@
 
  
 
-FROM quay.io/suhailtechinfo/suhail-v2
+FROM node:lts-buster
 
 # Clone the repository
 RUN git clone https://github.com/souravkl11/raganork-md /home/suhail
@@ -28,20 +28,25 @@ USER node
 # Set the working directory
 WORKDIR /home/suhail
 
-# Copy the server.js file into the working directory
+# Create the config.env file with environment variables
+
+         
+
+# Clean npm cache and install dependencies using npm
+RUN npm cache clean --force && npm install --legacy-peer-deps
+
+# Copy the server.js file into the working directory if needed
+# (If the server.js file is in the repository, no need to copy it)
 COPY server.js .
 
-# Install dependencies
-RUN npm install || yarn install
-
-# Create the start.sh script directly
-RUN echo '#!/bin/sh\nnode server.js &\nnpm start' > start.sh
+# Create the start.sh script
+RUN echo '#!/bin/sh\nnode server.js &\nnode index.js' > start.sh
 
 # Make the start.sh script executable
 RUN chmod +x start.sh
 
-# Expose the port
-EXPOSE 8000
+# Expose the required port (7860 in Hugging Face)
+EXPOSE 7860
 
 # Run the start.sh script
 CMD ./start.sh
